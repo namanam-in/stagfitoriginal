@@ -23,6 +23,8 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
+  overflow-x: clip;
 }
 
 section[id] {
@@ -32,12 +34,15 @@ section[id] {
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--text);
+  background-color: var(--bg);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), transparent 18%),
     radial-gradient(circle at top right, rgba(255, 255, 255, 0.035), transparent 20%),
     linear-gradient(180deg, #13181d 0%, #1a2026 48%, #151a1f 100%);
   min-height: 100vh;
   line-height: 1.65;
+  overflow-x: clip;
+  overscroll-behavior-y: none;
   opacity: 0;
   animation: page-in 0.7s ease forwards;
 }
@@ -813,6 +818,15 @@ main {
 }
 
 @media (max-width: 760px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .page-bg {
+    display: none;
+  }
+
   .site-header {
     flex-wrap: wrap;
     width: 100%;
@@ -821,6 +835,8 @@ main {
 
   .site-header::before {
     inset: 0;
+    background: rgba(22, 27, 33, 0.97);
+    backdrop-filter: none;
   }
 
   .nav-toggle {
@@ -854,6 +870,15 @@ main {
     padding: 0 1rem;
   }
 
+  .panel-card,
+  .card,
+  .price-card,
+  .contact-card,
+  .quote-card,
+  .hero-metric {
+    backdrop-filter: none;
+  }
+
   .site-footer {
     width: min(var(--max-width), 94%);
   }
@@ -873,9 +898,11 @@ main {
   }
 
   .hero {
-    width: 100vw;
+    width: calc(100% + 2rem);
     height: 72svh;
     min-height: 520px;
+    margin-left: -1rem;
+    margin-right: -1rem;
   }
 
   .hero-video-wrap::after {
