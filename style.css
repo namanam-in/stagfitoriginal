@@ -42,8 +42,7 @@ body {
     linear-gradient(180deg, #13181d 0%, #1a2026 48%, #151a1f 100%);
   min-height: 100vh;
   line-height: 1.65;
-  overflow-x: clip;
-  overscroll-behavior-y: none;
+  overflow-x: hidden;
   opacity: 1;
 }
 
@@ -221,15 +220,17 @@ main {
   margin-right: calc(50% - 50vw);
   overflow: hidden;
   background: #101418;
+  isolation: isolate;
 }
 
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: 1;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.22));
   box-shadow: var(--shadow);
+  pointer-events: none;
 }
 
 .hero::after {
@@ -248,8 +249,9 @@ main {
 .hero-video-wrap {
   position: absolute;
   inset: 0;
-  z-index: -3;
+  z-index: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .hero-video-wrap::after {
@@ -266,6 +268,7 @@ main {
   object-fit: cover;
   object-position: center center;
   display: block;
+  pointer-events: none;
 }
 
 .eyebrow,
