@@ -44,18 +44,28 @@ if (pageMenuToggle && pageMenu) {
   });
 }
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-      }
-    });
-  },
-  { threshold: 0.12 }
-);
+const motionEnabled =
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+  window.innerWidth > 760;
 
-document.querySelectorAll(".reveal").forEach((item) => observer.observe(item));
+if (motionEnabled) {
+  document.body.classList.add("has-motion");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll(".reveal").forEach((item) => observer.observe(item));
+} else {
+  document.querySelectorAll(".reveal").forEach((item) => item.classList.add("is-visible"));
+}
 
 const nextUrlField = document.getElementById("nextUrlField");
 if (nextUrlField) {
@@ -73,6 +83,9 @@ document.querySelectorAll("a[href]").forEach((link) => {
 
   if (isInternal) {
     link.addEventListener("click", (event) => {
+      if (!motionEnabled) {
+        return;
+      }
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
         return;
       }
